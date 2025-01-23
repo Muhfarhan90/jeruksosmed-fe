@@ -34,6 +34,7 @@ const Homepage = () => {
           }
         );
         setPosts(response.data);
+        console.log(response);
         setProfile(user);
       } catch (e) {
         console.log(e.response ? e.response.data : e.message);
@@ -42,6 +43,7 @@ const Homepage = () => {
     };
     fetchData();
   }, [navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -71,16 +73,20 @@ const Homepage = () => {
         />
       </div>
       {/* Postingan Total */}
-      <div className="">
+      <div className="pb-20">
         <div className="">
           {/* Postingan */}
           {posts.map((post, index) => (
             <Postingan
               key={index}
-              profile={image}
+              profile_id={post.author.id}
+              profile_image={image}
               name={post.author.name}
               email={post.author.email}
               message={post.content}
+              likes={post.likes}
+              postId={post._id}
+              userLiked={post.likes.includes(profile.author_id)}
             />
           ))}
         </div>
