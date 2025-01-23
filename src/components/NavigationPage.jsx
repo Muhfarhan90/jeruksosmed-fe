@@ -15,7 +15,7 @@ const NavigationPage = () => {
       </div>
       <div>
         <NavLink
-          to={"/"}
+          to={"/homepage"}
           className={({ isActive }) =>
             isActive ? "underline underline-offset-8" : ""
           }

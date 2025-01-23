@@ -22,9 +22,10 @@ const Login = () => {
       );
       console.log(response);
       setError("");
-      // Simpan token ke localstorage
-      localStorage.setItem("token", response.data.token)
-      navigate("/");
+      // Simpan token dan user ke localstorage
+      localStorage.setItem("user", JSON.stringify(response.data.author));
+      localStorage.setItem("token", response.data.token);
+      navigate("/homepage");
     } catch (error) {
       console.log(error.response ? error.response.data : error.message);
       setError("Login gagal, Silahkan coba lagi");

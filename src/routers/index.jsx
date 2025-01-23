@@ -3,12 +3,9 @@ import Login from "../pages/Login";
 import Homepage from "../pages/Homepage";
 import Register from "../pages/Register";
 import Following from "../pages/Following";
+import Layout from "../layout/index";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Homepage />,
-  },
   {
     path: "/login",
     element: <Login />,
@@ -18,10 +15,19 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/following",
-    element: <Following />,
-    },
-  
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/homepage",
+        element: <Homepage />,
+      },
+      {
+        path: "/following",
+        element: <Following />,
+      },
+    ],
+  },
 ]);
 
 export default router;

@@ -1,35 +1,40 @@
 // import React from 'react'
 // import { NavLink } from "react-router-dom";
 import Postingan from "../components/Postingan";
-import profile from "../assets/react.svg";
+import image from "../assets/react.svg";
 import NavigationPage from "../components/NavigationPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SideNav from "../components/SideNav";
 import { useNavigate } from "react-router-dom";
+import Post from "../components/Post";
 const Homepage = () => {
   // const [posts, setPosts] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!token) {
       navigate("/login");
       return;
     }
+    // Fetch Data Postingan
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           "https://jeruk-sosmed-api-771822095302.asia-southeast2.run.app/api/posts",
+          { token },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
           }
         );
         setPosts(response.data);
+        setProfile(user);
       } catch (e) {
         console.log(e.response ? e.response.data : e.message);
         setError("Gagal mengambil data, Silahkan coba lagi");
@@ -39,6 +44,8 @@ const Homepage = () => {
   }, [navigate]);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
     navigate("/login");
   };
   if (error) {
@@ -55,14 +62,22 @@ const Homepage = () => {
       >
         Logout
       </button>
-      {/* Postingan Total */}
+      {/* Create Post */}
       <div className="pt-16">
-        <div>
+        <Post
+          profile={profile}
+          name={profile.author_name}
+          email={profile.author_email}
+        />
+      </div>
+      {/* Postingan Total */}
+      <div className="">
+        <div className="">
           {/* Postingan */}
           {posts.map((post, index) => (
             <Postingan
               key={index}
-              profile={profile}
+              profile={image}
               name={post.author.name}
               email={post.author.email}
               message={post.content}
@@ -70,8 +85,6 @@ const Homepage = () => {
           ))}
         </div>
       </div>
-      {/* SideNav */}
-      <SideNav />
     </div>
   );
 };
