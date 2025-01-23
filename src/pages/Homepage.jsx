@@ -33,7 +33,7 @@ const Homepage = () => {
             },
           }
         );
-        setPosts(response.data);
+        setPosts(response.data.posts);
         console.log(response);
         setProfile(user);
       } catch (e) {
@@ -79,7 +79,6 @@ const Homepage = () => {
           {posts.map((post, index) => (
             <Postingan
               key={index}
-              profile_id={post.author.id}
               profile_image={image}
               name={post.author.name}
               email={post.author.email}

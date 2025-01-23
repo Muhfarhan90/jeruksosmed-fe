@@ -5,7 +5,7 @@ import Like from "./Like";
 // import axios from "axios";
 // import { useState } from "react";
 
-const Postingan = ({profile_id, profile_image, name, email, message, likes, postId, userLiked }) => {
+const Postingan = ( {profile_image, name, email, message, likes, postId, userLiked }) => {
   
   return (
     <div className="py-8 px-8 border-b-2 border-gray-300">
@@ -29,7 +29,7 @@ const Postingan = ({profile_id, profile_image, name, email, message, likes, post
         </div>
       </div>
       <div className="flex justify-evenly mt-2">
-        <Like profile_id={profile_id} postId={postId} countLike={likes.length} userLiked={userLiked}/>
+        <Like postId={postId} countLike={likes.length} userLiked={userLiked}/>
         <MdOutlineMessage size={30} />
       </div>
     </div>
