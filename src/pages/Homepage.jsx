@@ -13,6 +13,9 @@ const Homepage = () => {
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,9 +26,11 @@ const Homepage = () => {
     }
     // Fetch Data Postingan
     const fetchData = async () => {
+      if (!hasMore || isLoading) return;
+      setIsLoading(true);
       try {
         const response = await axios.post(
-          "https://jeruk-sosmed-api-771822095302.asia-southeast2.run.app/api/posts",
+          `https://jeruk-sosmed-api-771822095302.asia-southeast2.run.app/api/posts?page=${page}&perPage=10`,
           { token },
           {
             headers: {
@@ -33,17 +38,31 @@ const Homepage = () => {
             },
           }
         );
-        setPosts(response.data.posts);
+        setPosts((prevPosts) => [...prevPosts, ...response.data.posts]);
+        setHasMore(response.data.posts.length > 0);
         console.log(response);
         setProfile(user);
       } catch (e) {
         console.log(e.response ? e.response.data : e.message);
         setError("Gagal mengambil data, Silahkan coba lagi");
       }
+      setIsLoading(false);
     };
     fetchData();
-  }, [navigate]);
+  }, [page, navigate, hasMore]);
 
+  const handleScroll = () => {
+    const bottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    if (bottom && isLoading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoading, hasMore]);
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -83,7 +102,7 @@ const Homepage = () => {
               name={post.author.name}
               email={post.author.email}
               message={post.content}
-              likes={post.likes}
+              likes={post.likes.length}
               postId={post._id}
               userLiked={post.likes.includes(profile.author_id)}
             />

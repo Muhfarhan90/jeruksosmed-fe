@@ -4,6 +4,7 @@ import Homepage from "../pages/Homepage";
 import Register from "../pages/Register";
 import Following from "../pages/Following";
 import Layout from "../layout/index";
+import DetailPostingan from "../pages/DetailPostingan";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/following",
         element: <Following />,
+      },
+      {
+        path: "/post/:id",
+        element: <DetailPostingan />,
       },
     ],
   },

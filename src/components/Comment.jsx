@@ -2,11 +2,10 @@
 // import React from 'react'
 import { MdOutlineMessage } from "react-icons/md";
 import Like from "./Like";
-import { Link } from "react-router-dom";
 // import axios from "axios";
 // import { useState } from "react";
 
-const Postingan = ({
+const Comment = ({
   profile_image,
   name,
   email,
@@ -16,7 +15,6 @@ const Postingan = ({
   userLiked,
 }) => {
   return (
-    <Link to={`/post/${postId}`}>
       <div className="py-8 px-8 border-b-2 border-gray-300">
         <div className="flex gap-4 max-w-[768px] ">
           <div className="profile flex-shrink-0">
@@ -46,8 +44,7 @@ const Postingan = ({
           <MdOutlineMessage size={30} />
         </div>
       </div>
-    </Link>
   );
 };
 
-export default Postingan;
+export default Comment;
