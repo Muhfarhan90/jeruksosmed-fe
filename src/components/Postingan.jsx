@@ -14,6 +14,7 @@ const Postingan = ({
   likes,
   postId,
   userLiked,
+  totalComment
 }) => {
   return (
     <Link to={`/post/${postId}`}>
@@ -38,12 +39,11 @@ const Postingan = ({
           </div>
         </div>
         <div className="flex justify-evenly mt-2">
-          <Like
-            postId={postId}
-            countLike={likes}
-            userLiked={userLiked}
-          />
-          <MdOutlineMessage size={30} />
+          <Like postId={postId} countLike={likes} userLiked={userLiked} />
+          <div className="flex items-center gap-1">
+            <MdOutlineMessage size={30} />
+            <p>{totalComment ? totalComment : ("")}</p>
+          </div>
         </div>
       </div>
     </Link>

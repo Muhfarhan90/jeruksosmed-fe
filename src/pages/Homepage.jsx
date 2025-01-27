@@ -46,20 +46,19 @@ const Homepage = () => {
         console.log(e.response ? e.response.data : e.message);
         setError("Gagal mengambil data, Silahkan coba lagi");
       }
-      setIsLoading(false);
     };
     fetchData();
-  }, [page, navigate, hasMore]);
-
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-    if (bottom && isLoading && hasMore) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
+    setIsLoading(false);
+  }, [page, navigate, hasMore, isLoading]);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+      if (bottom && isLoading && hasMore) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoading, hasMore]);
@@ -105,6 +104,7 @@ const Homepage = () => {
               likes={post.likes.length}
               postId={post._id}
               userLiked={post.likes.includes(profile.author_id)}
+              totalComment={post.comments.length}
             />
           ))}
         </div>
