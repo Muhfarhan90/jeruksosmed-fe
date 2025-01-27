@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Post from "../components/Post";
+import SideNav from "../components/SideNav";
 const Homepage = () => {
   // const [posts, setPosts] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -49,9 +50,7 @@ const Homepage = () => {
     };
     fetchData();
     setIsLoading(false);
-  }, [page, navigate, hasMore, isLoading]);
 
-  useEffect(() => {
     const handleScroll = () => {
       const bottom =
         window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
@@ -61,52 +60,50 @@ const Homepage = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isLoading, hasMore]);
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  }, [page, navigate, hasMore, isLoading]);
 
-    navigate("/login");
-  };
+
+ 
   if (error) {
     return <div>{error}</div>;
   }
 
   return (
-    <div className="max-w-[768px] h-screen mx-auto border-l-2 border-r-2 border-black overflow-auto relative">
-      {/* Navigasi Following / Global */}
-      <NavigationPage />
-      <button
-        onClick={handleLogout}
-        className="py-2 px-4 bg-red-500 text-white rounded-lg absolute top-4 right-4"
-      >
-        Logout
-      </button>
-      {/* Create Post */}
-      <div className="pt-16">
-        <Post
-          profile={profile}
-          name={profile.author_name}
-          email={profile.author_email}
-        />
+    <div className="relative overflow-visible">
+      <div className="xl:absolute xl:left-0 xl:top-60  ">
+        <SideNav profil={profile} username={profile.author_name} email={profile.author_email} />
       </div>
-      {/* Postingan Total */}
-      <div className="pb-20">
-        <div className="">
-          {/* Postingan */}
-          {posts.map((post, index) => (
-            <Postingan
-              key={index}
-              profile_image={image}
-              name={post.author.name}
-              email={post.author.email}
-              message={post.content}
-              likes={post.likes.length}
-              postId={post._id}
-              userLiked={post.likes.includes(profile.author_id)}
-              totalComment={post.comments.length}
-            />
-          ))}
+
+      <div className="max-w-[768px] h-screen mx-auto border-l-2 border-r-2 border-black overflow-auto relative">
+        {/* Navigasi Following / Global */}
+        <NavigationPage />
+     
+        {/* Create Post */}
+        <div className="pt-16">
+          <Post
+            profile={profile}
+            name={profile.author_name}
+            email={profile.author_email}
+          />
+        </div>
+        {/* Postingan Total */}
+        <div className="pb-20">
+          <div className="">
+            {/* Postingan */}
+            {posts.map((post, index) => (
+              <Postingan
+                key={index}
+                profile_image={image}
+                name={post.author.name}
+                email={post.author.email}
+                message={post.content}
+                likes={post.likes.length}
+                postId={post._id}
+                userLiked={post.likes.includes(profile.author_id)}
+                totalComment={post.comments.length}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import SideNav from "../components/SideNav";
 import { useState } from "react";
 import axios from "axios";
 const Login = () => {
@@ -77,8 +76,6 @@ const Login = () => {
           </div>
         </div>
       </form>
-      {/* Side Nav */}
-      <SideNav />
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import SideNav from "../components/SideNav";
 import { useState } from "react";
 import axios from "axios";
 
@@ -43,7 +42,7 @@ const Register = () => {
 
   return (
     <div className="max-w-[768px] h-screen mx-auto border-l-2 border-r-2 border-black overflow-auto relative">
-      <form onSubmit={handleRegister} className="w-[400px] mx-auto mt-[30px]">
+      <form onSubmit={handleRegister} className="w-[400px] mx-auto mt-[70px]">
         <div className="flex flex-col px-4 py-4 border-2 border-black rounded-lg">
           <div className="mb-8 text-center">
             <h1 className="text-2xl text-primary font-bold">Jeruk Sosmed</h1>
@@ -111,8 +110,6 @@ const Register = () => {
           </div>
         </div>
       </form>
-      {/* Side Nav */}
-      <SideNav />
     </div>
   );
 };

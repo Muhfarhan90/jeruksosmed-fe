@@ -9,7 +9,6 @@ const index = () => {
     <div>
       <NavigationPage />
       <Outlet />
-      {/* <SideNav /> */}
     </div>
   );
 };
